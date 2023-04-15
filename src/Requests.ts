@@ -7,7 +7,10 @@ export const fetchTopTracks = (setTopTracks: any): any => {
       Authorization: "Bearer " + token,
     },
   };
-  return fetch("https://api.spotify.com/v1/me/top/tracks", requestParams)
+  return fetch(
+    "https://api.spotify.com/v1/me/top/tracks?limit=50",
+    requestParams
+  )
     .then(async (result) => await result.json())
     .then((data) => {
       return setTopTracks(data.items);

@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   Header,
-  Navbar,
   Text,
   useMantineColorScheme,
 } from "@mantine/core";
@@ -34,6 +33,12 @@ const getReturnedParamsFromSpotifyAuth = (hash: string): any => {
   }, {});
 };
 
+function getRandomIntInclusive(min: number, max: number): number {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+}
+
 const spotifyLogin = (): void => {
   window.location.href = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
 };
@@ -52,11 +57,6 @@ export default function HomePage(): JSX.Element {
   return (
     <AppShell
       padding="md"
-      navbar={
-        <Navbar width={{ base: 300 }} height={500} p="xs">
-          <Text>Navbar</Text>
-        </Navbar>
-      }
       header={
         <Header height={60} p="xs">
           <Flex
@@ -80,7 +80,7 @@ export default function HomePage(): JSX.Element {
                 fetchTopTracks(setTopTracks);
               }}
             >
-              Click to fetch cards
+              Top 50 Songs
             </Button>
             <ActionIcon
               variant="default"
@@ -108,7 +108,7 @@ export default function HomePage(): JSX.Element {
       })}
     >
       <ResponsiveMasonry>
-        <Masonry>
+        <Masonry gutter={"10px"}>
           {topTracks?.map((track: any, index: number) => {
             console.log(track);
             return (
@@ -118,6 +118,9 @@ export default function HomePage(): JSX.Element {
                 imageLinks={track.album.images}
                 artistName={track.artists[0].name}
                 trackName={track.name}
+                height={getRandomIntInclusive(200, 500)}
+                width={0}
+                playLinks={track.external_urls}
               />
             );
           })}

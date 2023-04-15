@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
+    "@fontsource/libre-baskerville": "^4.5.10",
     "@mantine/core": "^6.0.7",
     "@mantine/hooks": "^6.0.7",
     "@tabler/icons-react": "^2.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-responsive-masonry": "^2.1.7",
+    "react-spotify-embed": "^2.0.3",
     "recoil": "^0.7.7"
   },
   "devDependencies": {
