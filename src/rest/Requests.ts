@@ -20,7 +20,9 @@ export const fetchTopTracks = (setTopTracks: any): any => {
 export const spotifyLogin = (): void => {
   const CLIENT_ID = String(import.meta.env.VITE_SPOTIFY_CLIENT_ID);
   const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-  const REDIRECT_URL_AFTER_LOGIN = "http://localhost:5173";
+  const REDIRECT_URL_AFTER_LOGIN = import.meta.env.DEV
+    ? "http://localhost:5173"
+    : "https://lawclaw.github.io/songdisplayer/";
   const SPACE_DELIMITER = "%20";
   const SCOPES = ["user-top-read"];
   const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);

@@ -1,10 +1,13 @@
 {
-  "name": "spotify",
+  "name": "song-displayer",
   "private": true,
-  "version": "0.0.0",
+  "homepage": "https://lawclaw.github.io/songdisplayer/",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "pnpm run build",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
@@ -34,6 +37,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.32.2",
+    "gh-pages": "^5.0.0",
     "prettier": "^2.8.7",
     "typescript": "^4.9.5",
     "vite": "^4.2.0",
