@@ -1,14 +1,15 @@
 import * as React from "react";
-import HomePage from "./HomePage";
+import HomePage from "./components/HomePage";
 import {
   type ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
 } from "@mantine/core";
-import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { mantineColorScheme } from "./atoms/Atoms";
 
 export default function App(): JSX.Element {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+  const [colorScheme, setColorScheme] = useRecoilState(mantineColorScheme);
   const toggleColorScheme = (value?: ColorScheme): void => {
     setColorScheme(value ?? (colorScheme === "dark" ? "light" : "dark"));
   };

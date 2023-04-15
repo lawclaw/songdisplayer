@@ -11,32 +11,45 @@ import {
 import { useDisclosure, useHover } from "@mantine/hooks";
 import "@fontsource/libre-baskerville";
 import { Spotify } from "react-spotify-embed";
+import { useRecoilValue } from "recoil";
+import { mantineColorScheme } from "../atoms/Atoms";
 
 export interface AlbumCardProps {
-  imageLinks: any[];
+  imageLinks: Array<Record<string, unknown>>;
   artistName: string;
   trackName: string;
   rank: number;
   height: number;
   width: number;
-  playLinks: any;
+  playLinks: Record<string, unknown>;
 }
 
 const AlbumCard = (props: AlbumCardProps): JSX.Element => {
   const [opened, { open, close }] = useDisclosure(false);
+  const colorScheme = useRecoilValue(mantineColorScheme);
 
   const { hovered, ref } = useHover();
+
   const url = `${
     hovered ? "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))," : ""
   } url(${props.imageLinks[0].url as string})`;
+
+  const paperStyles: Sx = {
+    backgroundImage: url,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    cursor: "pointer",
+  };
+
   return (
     <MantineProvider
       theme={{
+        colorScheme,
         headings: { fontFamily: "Libre Baskerville, serif" },
       }}
     >
       <Modal opened={opened} onClose={close}>
-        <Spotify wide link={props.playLinks.spotify} />
+        <Spotify wide link={String(props.playLinks.spotify)} />
       </Modal>
       <Paper
         ref={ref}
@@ -44,27 +57,15 @@ const AlbumCard = (props: AlbumCardProps): JSX.Element => {
         shadow="md"
         p="lg"
         radius="md"
-        sx={
-          {
-            backgroundImage: url,
-            backgroundRepeat: "no-repeat",
-            width: "100%",
-            display: "block",
-            cursor: "pointer",
-          } satisfies Sx
-        }
+        sx={paperStyles}
         h={props.height}
-        onClick={(event) => {
+        onClick={() => {
           open();
         }}
       >
         <Grid>
           <Grid.Col span={12}>
-            <Badge
-              color="dark"
-              size="xl"
-              variant={hovered ? "light" : "filled"}
-            >
+            <Badge color="red" size="xl" variant={"filled"}>
               {props.rank + 1}
             </Badge>
           </Grid.Col>
@@ -75,7 +76,9 @@ const AlbumCard = (props: AlbumCardProps): JSX.Element => {
                   <Title>{props.trackName}</Title>
                 </Grid.Col>
                 <Grid.Col span={12}>
-                  <Title size={"h2"}>{props.artistName}</Title>
+                  <Title italic size={"h2"} weight={300}>
+                    {props.artistName}
+                  </Title>
                 </Grid.Col>
               </Paper>
             </>
